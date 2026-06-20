@@ -1,6 +1,11 @@
 // Tiny fetch wrapper that injects the JWT and normalizes errors.
 const TOKEN_KEY = 'att_token';
 
+// Base URL of the API. In production set VITE_API_URL to the backend origin
+// (e.g. https://attendance-tracker-dc8m.onrender.com). In dev it's left empty so
+// requests hit the same origin and Vite's proxy forwards /api → the local backend.
+const API_BASE = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
 export function getToken() {
   return localStorage.getItem(TOKEN_KEY);
 }
@@ -10,7 +15,7 @@ export function setToken(t) {
 }
 
 export async function api(path, { method = 'GET', body, params } = {}) {
-  const url = new URL(`/api${path}`, window.location.origin);
+  const url = new URL(`${API_BASE}/api${path}`, window.location.origin);
   if (params) {
     Object.entries(params).forEach(([k, v]) => {
       if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, v);
@@ -21,7 +26,7 @@ export async function api(path, { method = 'GET', body, params } = {}) {
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const res = await fetch(url.pathname + url.search, {
+  const res = await fetch(url.toString(), {
     method,
     headers,
     body: body ? JSON.stringify(body) : undefined,
