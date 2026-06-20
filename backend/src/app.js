@@ -13,7 +13,17 @@ import { notFoundHandler, errorHandler } from './middleware/error.js';
 export function createApp() {
   const app = express();
 
-  app.use(cors({ origin: env.clientOrigin, credentials: true }));
+  // Allow requests from the configured origins. Requests with no Origin header
+  // (curl, Postman, server-to-server, health checks) are allowed through.
+  app.use(
+    cors({
+      origin(origin, cb) {
+        if (!origin || env.clientOrigins.includes(origin)) return cb(null, true);
+        return cb(new Error(`Origin ${origin} not allowed by CORS`));
+      },
+      credentials: true,
+    })
+  );
   app.use(express.json());
 
   // Basic abuse protection on auth endpoints.

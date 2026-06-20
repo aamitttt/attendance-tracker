@@ -6,6 +6,15 @@ function num(value, fallback) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+// Parse CLIENT_ORIGIN as a comma-separated allowlist and normalize trailing slashes,
+// so e.g. "http://localhost:5173, https://teams-tracker1.netlify.app/" both work.
+function origins(value, fallback) {
+  return (value || fallback)
+    .split(',')
+    .map((o) => o.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+}
+
 export const env = {
   port: num(process.env.PORT, 4000),
   mongoUri: process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/attendance_tracker',
@@ -14,5 +23,5 @@ export const env = {
   lateThresholdHour: num(process.env.LATE_THRESHOLD_HOUR, 9),
   lateThresholdMinute: num(process.env.LATE_THRESHOLD_MINUTE, 30),
   standardDayHours: num(process.env.STANDARD_DAY_HOURS, 9),
-  clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
+  clientOrigins: origins(process.env.CLIENT_ORIGIN, 'http://localhost:5173'),
 };
