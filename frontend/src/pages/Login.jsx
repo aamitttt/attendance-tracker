@@ -31,9 +31,28 @@ export default function Login() {
     setPassword('Password123');
   }
 
+  const DEMOS = [
+    { role: 'Admin', name: 'Arjun Singh', email: 'admin@acme.test', color: 'indigo' },
+    { role: 'Manager', name: 'Amit', email: 'maya@acme.test', color: 'amber' },
+    { role: 'Employee', name: 'Sunil', email: 'eli@acme.test', color: 'green' },
+  ];
+
   return (
     <div className="center-page">
-      <form className="card auth-card" onSubmit={submit}>
+      <div className="auth-card">
+        <div className="brand">
+          <span className="brand-icon" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+          </span>
+          <div>
+            <div className="brand-title">Attendance Tracker</div>
+            <div className="brand-sub">Daily work &amp; attendance for real teams</div>
+          </div>
+        </div>
+      <form className="card" onSubmit={submit}>
         <h2>{mode === 'login' ? 'Sign in' : 'Create account'}</h2>
         {mode === 'signup' && (
           <div className="field">
@@ -63,16 +82,16 @@ export default function Login() {
           <div className="muted" style={{ fontSize: 12, marginBottom: 8 }}>
             Demo credentials — click to fill (password <code>Password123</code>)
           </div>
-          <button type="button" className="demo-card" onClick={() => useDemo('admin@acme.test')}>
-            <span className="badge indigo">Admin / HR</span>
-            <span className="demo-email">admin@acme.test</span>
-          </button>
-          <button type="button" className="demo-card" onClick={() => useDemo('eli@acme.test')}>
-            <span className="badge green">Employee</span>
-            <span className="demo-email">eli@acme.test</span>
-          </button>
+          {DEMOS.map((d) => (
+            <button key={d.email} type="button" className="demo-card" onClick={() => useDemo(d.email)}>
+              <span className={`badge ${d.color}`}>{d.role}</span>
+              <span className="demo-name">{d.name}</span>
+              <span className="demo-email">{d.email}</span>
+            </button>
+          ))}
         </div>
       </form>
+      </div>
     </div>
   );
 }

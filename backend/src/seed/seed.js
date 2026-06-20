@@ -76,12 +76,12 @@ async function run() {
 
   // ── Admin / HR (no team — sees everything) ─────────────────────────────────
   const admin = await makeUser({
-    name: 'Hana Admin', email: 'admin@acme.test', role: 'admin', team: null, leaveBalance: 30,
+    name: 'Arjun Singh', email: 'admin@acme.test', role: 'admin', team: null, leaveBalance: 30,
   });
 
   // ── Managers (one per team) ────────────────────────────────────────────────
   const engManager = await makeUser({
-    name: 'Maya Manager', email: 'maya@acme.test', role: 'manager', team: engineering._id,
+    name: 'Amit', email: 'maya@acme.test', role: 'manager', team: engineering._id,
   });
   const desManager = await makeUser({
     name: 'Dev Designlead', email: 'dev@acme.test', role: 'manager', team: design._id,
@@ -97,7 +97,7 @@ async function run() {
 
   // ── Employees ──────────────────────────────────────────────────────────────
   const employees = await Promise.all([
-    makeUser({ name: 'Eli Engineer', email: 'eli@acme.test', role: 'employee', team: engineering._id }),
+    makeUser({ name: 'Sunil', email: 'eli@acme.test', role: 'employee', team: engineering._id }),
     makeUser({ name: 'Nora Node', email: 'nora@acme.test', role: 'employee', team: engineering._id }),
     makeUser({ name: 'Raj React', email: 'raj@acme.test', role: 'employee', team: engineering._id }),
     makeUser({ name: 'Pia Pixel', email: 'pia@acme.test', role: 'employee', team: design._id }),

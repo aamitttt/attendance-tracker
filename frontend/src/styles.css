@@ -104,7 +104,17 @@ button.sm { padding: 5px 10px; font-size: 12px; }
   font-weight: 500; text-align: left;
 }
 .demo-card:hover { background: var(--panel); border-color: var(--accent); }
-.demo-card .demo-email { font-size: 13px; color: var(--muted); }
+.demo-card .demo-name { font-weight: 600; font-size: 13px; }
+.demo-card .demo-email { font-size: 12px; color: var(--muted); margin-left: auto; }
+
+.brand { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 0 2px; }
+.brand-icon {
+  display: inline-grid; place-items: center; width: 46px; height: 46px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: 12px; box-shadow: 0 4px 14px rgba(99,102,241,.4);
+}
+.brand-title { font-size: 20px; font-weight: 700; color: var(--text); line-height: 1.1; }
+.brand-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
 
 /* ── Mobile / tablet ─────────────────────────────────────────────────────── */
 @media (max-width: 760px) {
